@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>My Blog</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="/js/marked.js"  th:scr="@{/js/marked.js}"></script> 
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Blogs</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="./createblog">Create Blog</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<div class="row">
+			<!-- Blog Entries Column -->
+            <div class="col-md-12" >
+			<span th:each="blog : ${blogList}">
+                <!-- First Blog Post -->
+                <h2>
+                    <a href="/viewblog" th:href="@{/viewblog/{blog.id}}" th:text="${blog.title}">Blog Post Title</a>
+                </h2>
+                <p th:text = "'Posted by '+${blog.user.name} + ' on ' +${blog.createDate} "><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
+                <p th:id="'bodyContent' + ${blog.id}">Some sample text.</p>
+                <a class="btn btn-primary" href="/viewblog" th:href="@{'/viewblog/'+${blog.id}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                 <script th:inline="javascript">
+                 /*<![CDATA[*/
+                 var pid=  /*[[${blog.id}]]*/;
+                 var bdy = /*[[${blog.body}]]*/
+                 document.getElementById("bodyContent"+pid).innerHTML = marked(bdy);
+                </script>
+                <hr>
+</span>
+                
+               
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="#">&larr; Older</a>
+                    </li>
+                    <li class="next">
+                        <a href="#">Newer &rarr;</a>
+                    </li>
+                </ul>
+
+            </div>
+		</div> <!-- row -->
+	</div> <!-- container -->
+
+</body>
+</html>

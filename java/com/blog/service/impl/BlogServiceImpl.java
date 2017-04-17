@@ -1,0 +1,35 @@
+package com.blog.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.blog.dao.BlogDAO;
+import com.blog.model.Blog;
+import com.blog.service.BlogService;
+
+@Service("blogService")
+public class BlogServiceImpl implements BlogService{
+
+	@Autowired
+	private BlogDAO blogDAO;
+
+	@Override
+	public Blog findBlog(Long blogId) {
+		
+		return blogDAO.getOne(blogId);
+	}
+
+	@Override
+	public void saveBlog(Blog blog) {
+		blogDAO.save(blog);
+		
+	}
+
+	@Override
+	public List<Blog> getAllBlogs() {
+		return blogDAO.findAll();
+	}
+	
+}
