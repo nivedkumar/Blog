@@ -3,10 +3,8 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>My Blog</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="/js/marked.js"  th:scr="@{/js/marked.js}"></script> 
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -29,31 +27,16 @@
             <div class="col-md-12">
 
                 <!-- First Blog Post -->
-                <h2>
-                    <a href="#">Blog Post Title</a>
+                <h2 th:text="${blog.title}">
+                    Blog Post Title
                 </h2>
-                <p><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
+                 <p th:text = "'Posted by '+${blog.user.name} + ' on ' +${blog.createDate} "><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
+                <p th:id="bodyContent">Some sample text.</p>
+                 <script th:inline="javascript">
+                 /*<![CDATA[*/
+                 var bdy = /*[[${blog.body}]]*/
+                 document.getElementById("bodyContent").innerHTML = marked(bdy);
+                </script>
                 
                 
                 <hr>

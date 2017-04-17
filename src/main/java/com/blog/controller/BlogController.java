@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,9 +44,10 @@ public class BlogController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value={"/viewblog"}, method = RequestMethod.GET)
-	public ModelAndView view(Long blogId){
+	@RequestMapping(value={"/viewblog/{id}"})//, method = RequestMethod.GET)
+	public ModelAndView view(@PathVariable Long id){
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("blog", blogService.findBlog(id));
 		Comments comments  = new Comments();
 		modelAndView.addObject("comments", comments);
 		modelAndView.setViewName("viewblog");
