@@ -41,10 +41,11 @@
                 
                 <hr>
                 <form autocomplete="off" action="#" th:action="@{/savecomment}"
-					th:object="${comments}" method="post" class="form-horizontal"
+					th:object="${newComments}" method="post" class="form-horizontal"
 					role="form">
 					<div class="form-group">
 						<div class="col-sm-9">
+						<input type="hidden" name = "blogId" th:value="${blog.id}"/>
 						<label	th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"
 								class="validation-message"></label>
 							<textarea id="comment" th:field="*{comment}" 
@@ -61,15 +62,13 @@
 				</form>
 				<hr>
 				<h4>Comments</h4>
-				<div class="col-sm-9">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, 
-                necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi 
-                corrupti debitis ipsum officiis rerum.</p>
-                </div>
+					<div class="col-sm-9">
+					<span th:each="comts : ${blog.comments}">
+					<p th:text ="${comts.comment}">Comment.</p>
+	                <hr>
+	                </span>
+	                
+	                </div>
 				</div>
 		</div> <!-- row -->
 	</div> <!-- container -->

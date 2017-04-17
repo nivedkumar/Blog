@@ -40,7 +40,7 @@ public class Blog {
 	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "comment_id")
+	@JoinColumn(name = "blog_id")
 	private List<Comments> comments;
 
 	public List<Comments> getComments() {

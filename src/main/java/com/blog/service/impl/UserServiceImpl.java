@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blog.dao.RoleDAO;
@@ -21,15 +22,19 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private RoleDAO roleDAO;
 	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Override
-	public User getUser(String username) {
+	public User findByUsername(String username) {
 		
 		return userDAO.findByUsername(username);
 	}
 	
 	@Override
 	public void saveUser(User user) {
-		user.setPassword(user.getPassword());
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
         Role userRole = roleDAO.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userDAO.save(user);

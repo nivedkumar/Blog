@@ -11,11 +11,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private DataSource dataSource;
@@ -34,7 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			jdbcAuthentication()
 				.usersByUsernameQuery(usersQuery)
 				.authoritiesByUsernameQuery(rolesQuery)
-				.dataSource(dataSource);
+				.dataSource(dataSource)
+				.passwordEncoder(bCryptPasswordEncoder);
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -46,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/registration").permitAll()
 				.antMatchers("/blogs").permitAll()
 				.antMatchers("/createblog").permitAll()
-				.antMatchers("/viewblog").permitAll();
-				/*.antMatchers("/admin/**").hasAuthority("USER").anyRequest()
+				.antMatchers("/viewblog").permitAll()
+				.antMatchers("/admin/**").hasAuthority("USER").anyRequest()
 				.authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
 				.defaultSuccessUrl("/admin/home")
@@ -56,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied");*/
+				.accessDeniedPage("/access-denied");
 	}
 	
 	@Override

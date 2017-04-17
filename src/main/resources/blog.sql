@@ -7,14 +7,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `user`;
-
-delete from `user`;
-
-delete from `user_role`
-
-INSERT INTO `user` values(1,'root','lastname','Name','root');SELECT user_id,username,last_name,name,password FROM user;
-
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(255) DEFAULT NULL,
