@@ -113,7 +113,7 @@ public class BlogController {
 	public String saveComment(@RequestParam(value = "blogId", required = false) Long id,Comments newComments){
 		
 		if(newComments!=null){
-			newComments.setUser(userService.findByUsername("admin"));
+			newComments.setUser(userService.findByUsername("anonymous"));
 			newComments.setCreateDate(new Date());
 			
 			Blog blog = blogService.findBlog(id);

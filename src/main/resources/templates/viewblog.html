@@ -91,7 +91,7 @@
 				<h4>Comments</h4>
 					<div class="col-sm-9">
 					<span th:each="comts : ${blog.comments}">
-					<p th:text ="${comts.comment} +' by '+${blog.user.name} + ' on '+ ${comts.createDate}">Comment.</p>
+					<p th:text ="${comts.comment} +' by '+${comts.user.name} + ' on '+ ${comts.createDate}">Comment.</p>
 	                <hr>
 	                </span>
 	                
