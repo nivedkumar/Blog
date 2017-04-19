@@ -42,5 +42,10 @@ public class BlogServiceImpl implements BlogService{
 		commentsDAO.save(comments);
 		
 	}
+
+	@Override
+	public void deleteBlog(Long blogId) {
+		blogDAO.delete(blogId);
+	}
 	
 }

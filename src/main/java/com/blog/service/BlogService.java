@@ -13,5 +13,7 @@ public interface BlogService {
 	public List<Blog> getAllBlogs();
 	
 	public void saveComments(Comments comments);
+	
+	public void deleteBlog(Long blogId);
 
 }

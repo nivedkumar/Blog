@@ -10,16 +10,20 @@
 <nav class="navbar navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Blogs</a>
+				Blogs
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="/create">Create Blog</a></li>
+					<li ><a href="../blogs">Home</a></li>
+					<li >
+					  <a href="../createblog">Create Blog</a>
+					</li>
+					
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
 	
 	<div class="container">
 		<div class="row">
@@ -29,7 +33,24 @@
                 <!-- First Blog Post -->
                 <h2 th:text="${blog.title}">
                     Blog Post Title
-                </h2>
+	                </h2>
+	                <form autocomplete="off" action="#" th:action="@{/editblog}"
+					 method="post" class="form-horizontal"
+					role="form">
+					<input type="hidden" name = "edblogId" th:value="${blog.id}"/>
+	        		<button type="submit" class="btn btn-default btn-sm">
+			          <span class="glyphicon glyphicon-pencil"></span> Edit 
+			        </button>
+			        </form>
+	                
+	        		<form autocomplete="off" action="#" th:action="@{/deleteblog}"
+							method="post" class="form-horizontal"
+							role="form">
+							<input type="hidden" name = "delBlogId" th:value="${blog.id}"/>
+		        		<button type="submit" class="btn btn-default btn-sm">
+				          <span class="glyphicon glyphicon-remove"></span> Delete 
+				        </button>
+			        </form>
                  <p th:text = "'Posted by '+${blog.user.name} + ' on ' +${blog.createDate} "><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
                 <p th:id="bodyContent">Some sample text.</p>
                  <script th:inline="javascript">
@@ -48,7 +69,7 @@
 						<input type="hidden" name = "blogId" th:value="${blog.id}"/>
 						<label	th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"
 								class="validation-message"></label>
-							<textarea id="comment" th:field="*{comment}" 
+							<textarea id="comment" th:field="*{comment}" maxlength="255"
 								placeholder="Leave comments ..." class="form-control" ></textarea> 
 						</div>
 					</div>
@@ -64,7 +85,7 @@
 				<h4>Comments</h4>
 					<div class="col-sm-9">
 					<span th:each="comts : ${blog.comments}">
-					<p th:text ="${comts.comment}">Comment.</p>
+					<p th:text ="${comts.comment} +' - '+${blog.user.name} + ' on '+ ${comts.createDate}">Comment.</p>
 	                <hr>
 	                </span>
 	                

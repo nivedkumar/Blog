@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "blog")
 public class Blog {
@@ -24,9 +27,12 @@ public class Blog {
 	private Long id;
 
 	@Column(name = "title")
+	@NotEmpty(message = "*Please provide your title")
+	@Length(max = 255, message = "*Your title cannot be morethan 255 characters")
 	private String title;
 
 	@Column(name = "body")
+	@NotEmpty(message = "*Please provide your comment")
 	private String body;
 
 	@Column(name = "create_date")
@@ -35,12 +41,12 @@ public class Blog {
 	@Column(name = "last_update_date")
 	private Date lastUpDt;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "blog_id")
+	@JoinColumn(name = "blog_id",insertable = false, updatable = false)
 	private List<Comments> comments;
 
 	public List<Comments> getComments() {

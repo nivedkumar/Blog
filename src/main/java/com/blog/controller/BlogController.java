@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +33,7 @@ public class BlogController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value={"/blogs"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/","/blogs"}, method = RequestMethod.GET)
 	public ModelAndView blog(){
 		logger.debug("BlogConroller:: Blog():: Start");
 		ModelAndView modelAndView = new ModelAndView();
@@ -68,24 +71,51 @@ public class BlogController {
 		return modelAndView;
 	}
 	@RequestMapping(value={"/saveblog"}, method = RequestMethod.POST)
-	public String save(Blog blog){
-		blog.setCreateDate(new Date());
-		blog.setLastUpDt(new Date());
-		blog.setUser(userService.findByUsername("admin"));
-		blogService.saveBlog(blog);
+	public String save(@Valid Blog blog,BindingResult bindingResult){
+		
+		if (bindingResult.hasErrors()) {
+			return "createblog";
+		} else {
+			blog.setCreateDate(new Date());
+			blog.setLastUpDt(new Date());
+			blog.setUser(userService.findByUsername("admin"));
+			blogService.saveBlog(blog);
+			return "redirect:/blogs";
+		}
+	}
+	
+	@RequestMapping(value={"/editblog"}, method = RequestMethod.POST)
+	public ModelAndView edit(@RequestParam(value = "edblogId", required = false) Long id){
+		logger.debug("BlogConroller:: View():: Start. :: Id ::"+id);
+		ModelAndView modelAndView = new ModelAndView();
+		Blog blog = blogService.findBlog(id);
+		
+		modelAndView.addObject("blog", blog);
+		modelAndView.setViewName("createblog");
+		logger.debug("BlogConroller:: view():: End.");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value={"/deleteblog"}, method = RequestMethod.POST)
+	public String delete(@RequestParam(value = "delBlogId", required = false) Long id){
+		logger.debug("BlogConroller:: Delete():: Start. :: Id ::"+id);
+		blogService.deleteBlog(id);
+		
+		logger.debug("BlogConroller:: delete():: End.");
 		return "redirect:/blogs";
 	}
 	
 	@RequestMapping(value={"/savecomment"}, method = RequestMethod.POST)
 	public String saveComment(@RequestParam(value = "blogId", required = false) Long id,Comments newComments){
 		
-		newComments.setUser(userService.findByUsername("admin"));
-		newComments.setCreateDate(new Date());
-		
-		Blog blog = blogService.findBlog(id);
-		newComments.setBlog(blog);
-		blogService.saveComments(newComments);
-		
+		if(newComments!=null){
+			newComments.setUser(userService.findByUsername("admin"));
+			newComments.setCreateDate(new Date());
+			
+			Blog blog = blogService.findBlog(id);
+			newComments.setBlog(blog);
+			blogService.saveComments(newComments);
+		}
 		return "redirect:/viewblog/"+id;
 	}
 }
