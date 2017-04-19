@@ -63,10 +63,14 @@ public class BlogController {
 		ModelAndView modelAndView = new ModelAndView();
 		Blog blog = blogService.findBlog(id);
 		
-		modelAndView.addObject("blog", blog );
-		modelAndView.addObject("newComments",new Comments());
-		modelAndView.addObject("commentsList", blog.getComments());
-		modelAndView.setViewName("viewblog");
+		if(blog!=null){
+			modelAndView.addObject("blog", blog );
+			modelAndView.addObject("newComments",new Comments());
+			modelAndView.addObject("commentsList", blog.getComments());
+			modelAndView.setViewName("viewblog");
+		}else{
+			modelAndView.setViewName("error");
+		}
 		logger.debug("BlogConroller:: view():: End.");
 		return modelAndView;
 	}
