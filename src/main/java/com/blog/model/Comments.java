@@ -31,7 +31,7 @@ public class Comments {
 	@Column(name = "create_date")
 	private Date createDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "user_id")
 	private User user;
 

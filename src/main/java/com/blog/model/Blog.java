@@ -46,7 +46,7 @@ public class Blog {
 	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "blog_id",insertable = false, updatable = false)
+	@JoinColumn(name = "blog_id" , insertable=false,updatable=false)
 	private List<Comments> comments;
 
 	public List<Comments> getComments() {
