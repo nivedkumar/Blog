@@ -29,11 +29,14 @@
 		<div class="row">
 			<!-- Blog Entries Column -->
             <div class="col-md-12">
-
+<div class="panel panel-default" >
+              <div class="panel-body">
                 <!-- First Blog Post -->
-                <h2 th:text="${blog.title}">
-                    Blog Post Title
-	                </h2>
+               <div class="col-md-12">
+                	<div class="col-md-10">
+								<h2 th:text="${blog.title}">Blog Post Title</h2>
+					</div>
+	                <div class="col-md-1">
 	                <form autocomplete="off" action="#" th:action="@{/editblog}"
 					 method="post" class="form-horizontal"
 					role="form">
@@ -42,7 +45,8 @@
 			          <span class="glyphicon glyphicon-pencil"></span> Edit 
 			        </button>
 			        </form>
-	                
+			        </div>
+	                <div class="col-md-1">
 	        		<form autocomplete="off" action="#" th:action="@{/deleteblog}"
 							method="post" class="form-horizontal"
 							role="form">
@@ -51,6 +55,8 @@
 				          <span class="glyphicon glyphicon-remove"></span> Delete 
 				        </button>
 			        </form>
+			        </div>
+			        </div>
                  <p th:text = "'Posted by '+${blog.user.name} + ' on ' +${blog.createDate} "><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
                 <p th:id="bodyContent">Some sample text.</p>
                  <script th:inline="javascript">
@@ -59,8 +65,8 @@
                  document.getElementById("bodyContent").innerHTML = marked(bdy);
                 </script>
                 
-                
-                <hr>
+                </div>
+                </div>
                 <form autocomplete="off" action="#" th:action="@{/savecomment}"
 					th:object="${newComments}" method="post" class="form-horizontal"
 					role="form">
@@ -85,7 +91,7 @@
 				<h4>Comments</h4>
 					<div class="col-sm-9">
 					<span th:each="comts : ${blog.comments}">
-					<p th:text ="${comts.comment} +' - '+${blog.user.name} + ' on '+ ${comts.createDate}">Comment.</p>
+					<p th:text ="${comts.comment} +' by '+${blog.user.name} + ' on '+ ${comts.createDate}">Comment.</p>
 	                <hr>
 	                </span>
 	                

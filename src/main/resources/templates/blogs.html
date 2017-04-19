@@ -32,9 +32,10 @@
 		<div class="row">
 			<!-- Blog Entries Column -->
             <div class="col-md-12" >
-			<span th:each="blog : ${blogList}">
+            
+			<div class="panel panel-default" th:each="blog : ${blogList}">
                 <!-- First Blog Post -->
-                <h2>
+             <div class="panel-body">   <h2>
                     <a href="/viewblog" th:href="@{'/viewblog/'+${blog.id}}" th:text="${blog.title}">Blog Post Title</a>
                 </h2>
                 <p th:text = "'Posted by '+${blog.user.name} + ' on ' +${blog.createDate} "><span class="glyphicon glyphicon-time"></span> Posted by Start Bootstrap on August 28, 2013 at 10:00 PM</p>
@@ -49,8 +50,8 @@
                  }
                  document.getElementById("bodyContent"+pid).innerHTML = marked(bdy);
                 </script>
-                <hr>
-</span>
+                </div>
+</div>
                 
                
             </div>
